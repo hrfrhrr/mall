@@ -1,0 +1,40 @@
+server:
+  port: ${USER_PORT:9102}
+
+spring:
+  application:
+    name: baizhan-user
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/baizhanshopping?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:baizhan123}
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER:localhost:8848}
+      config:
+        server-addr: ${NACOS_SERVER:localhost:8848}
+        import-check:
+          enabled: false
+
+mybatis-plus:
+  configuration:
+    # 本项目数据库列名为驼峰（如 nickName/goodsName），必须关闭下划线转驼峰
+    map-underscore-to-camel-case: false
+
+knife4j:
+  enable: true
+
+baizhan:
+  jwt:
+    # 必须与 baizhan-auth 的签发密钥一致（服务级验签）
+    secret: ${BAZHAN_JWT_SECRET:YmFpemhhbi1tYWxsLWp3dC1zaWduLXNlY3JldC0yMDI0LTAxLTAx}
+    expiration: 7200
+  jwt-auth:
+    # 用户中心全部接口需登录
+    skip-paths: []
+
+logging:
+  level:
+    com.baizhan.mall: debug

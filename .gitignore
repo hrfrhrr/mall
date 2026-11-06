@@ -1,0 +1,41 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Node
+node_modules/
+dist/
+npm-debug.log*
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env.local
+.env.*.local
+
+# CodeBuddy
+.codebuddy/
+
+# workbuddy
+.workbuddy/
+
+# Docker
+docker/higress/data/.console-used
+docker/higress/data/configmaps/
+docker/higress/data/secrets/
+docker/higress/data/envoyfilters/
+docker/higress/data/services/

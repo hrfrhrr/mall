@@ -1,0 +1,58 @@
+server:
+  port: ${ORDER_PORT:9104}
+
+spring:
+  application:
+    name: baizhan-order
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/baizhanshopping?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:baizhan123}
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER:localhost:8848}
+      config:
+        server-addr: ${NACOS_SERVER:localhost:8848}
+        import-check:
+          enabled: false
+
+mybatis-plus:
+  configuration:
+    # 本项目数据库列名为驼峰（如 nickName/goodsName），必须关闭下划线转驼峰
+    map-underscore-to-camel-case: false
+
+# Dubbo：注册到 Nacos，订单服务作为 consumer 调用商品服务
+# 注意：application.name 必须与 spring.application.name 区分，
+# 否则 Dubbo 实例会混入 Spring Cloud 的 HTTP 服务列表，导致网关路由错实例
+dubbo:
+  application:
+    name: ${spring.application.name}-dubbo
+    qos-enable: false
+  registry:
+    address: nacos://${NACOS_SERVER:localhost:8848}
+
+knife4j:
+  enable: true
+
+baizhan:
+  jwt:
+    # 必须与 baizhan-auth 的签发密钥一致（服务级验签）
+    secret: ${BAZHAN_JWT_SECRET:YmFpemhhbi1tYWxsLWp3dC1zaWduLXNlY3JldC0yMDI0LTAxLTAx}
+    expiration: 7200
+  jwt-auth:
+    # 订单中心全部接口需登录
+    skip-paths: []
+  order:
+    expire-minutes: ${ORDER_EXPIRE_MINUTES:30}
+  mq:
+    # ROCKETMQ_ADDR 为空时自动关闭 MQ（降级同步下单）
+    enabled: ${ROCKETMQ_ENABLED:false}
+    name-addr: ${ROCKETMQ_ADDR:rocketmq-namesrv:9876}
+    producer-group: baizhan-order-group
+    order-timeout-topic: baizhan-order-timeout
+
+logging:
+  level:
+    com.baizhan.mall: debug

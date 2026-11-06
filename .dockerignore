@@ -1,0 +1,8 @@
+**/node_modules/
+frontend/dist/
+.git/
+.idea/
+.vscode/
+docs/
+*.md
+*.log

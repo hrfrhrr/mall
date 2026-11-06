@@ -1,0 +1,68 @@
+server:
+  port: ${PRODUCT_PORT:9103}
+
+spring:
+  application:
+    name: baizhan-product
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/baizhanshopping?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:baizhan123}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:baizhan123}
+      database: 0
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER:localhost:8848}
+      config:
+        server-addr: ${NACOS_SERVER:localhost:8848}
+        import-check:
+          enabled: false
+
+mybatis-plus:
+  configuration:
+    # 本项目数据库列名为驼峰（如 nickName/goodsName），必须关闭下划线转驼峰
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# Dubbo：注册到 Nacos，商品服务作为 provider 暴露 20880 端口
+# 注意：application.name 必须与 spring.application.name 区分，
+# 否则 Dubbo 的 20880 实例会混入 Spring Cloud 的 HTTP 服务列表，导致网关路由错实例
+dubbo:
+  application:
+    name: ${spring.application.name}-dubbo
+    qos-enable: false
+  registry:
+    address: nacos://${NACOS_SERVER:localhost:8848}
+  protocol:
+    name: dubbo
+    port: 20880
+
+knife4j:
+  enable: true
+
+baizhan:
+  jwt:
+    # 必须与 baizhan-auth 的签发密钥一致（服务级验签）
+    secret: ${BAZHAN_JWT_SECRET:YmFpemhhbi1tYWxsLWp3dC1zaWduLXNlY3JldC0yMDI0LTAxLTAx}
+    expiration: 7200
+  jwt-auth:
+    # 商品浏览与广告位对游客开放
+    skip-paths:
+      - /api/product/goods/page
+      - /api/product/goods/*
+      - /api/product/ads
+
+logging:
+  level:
+    com.baizhan.mall: debug

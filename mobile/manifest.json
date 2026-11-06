@@ -1,0 +1,47 @@
+{
+  "name": "亿级电商",
+  "appid": "__UNI__BAIZHANMALL",
+  "description": "亿级高并发电商平台 - C端多端应用",
+  "versionName": "1.0.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "app-plus": {
+    "usingComponents": true,
+    "splashscreen": {
+      "alwaysShowBeforeRender": true,
+      "autoclose": true
+    },
+    "modules": {},
+    "distribute": {
+      "android": {},
+      "ios": {},
+      "sdkConfigs": {}
+    }
+  },
+  "h5": {
+    "router": {
+      "base": "/"
+    },
+    "devServer": {
+      "port": 5174,
+      "proxy": {
+        "/api": {
+          "target": "http://localhost:9000",
+          "changeOrigin": true,
+          "secure": false
+        }
+      }
+    }
+  },
+  "mp-weixin": {
+    "appid": "",
+    "setting": {
+      "urlCheck": false,
+      "es6": true,
+      "minified": true
+    },
+    "usingComponents": true,
+    "permission": {}
+  },
+  "vueVersion": "3"
+}

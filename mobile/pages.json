@@ -1,0 +1,45 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "亿级电商",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/detail/detail",
+      "style": {
+        "navigationBarTitleText": "商品详情"
+      }
+    },
+    {
+      "path": "pages/login/login",
+      "style": {
+        "navigationBarTitleText": "登录"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "亿级电商",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f5f6f8",
+    "app-plus": {
+      "titleNView": {
+        "backgroundColor": "#ffffff"
+      }
+    }
+  },
+  "tabBar": {
+    "color": "#909399",
+    "selectedColor": "#2b6cb0",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: baizhan-order
+  namespace: higress-system
+  annotations:
+    higress.io/destination: baizhan-order.DEFAULT-GROUP.public.nacos
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/order
+            pathType: Prefix
+            backend:
+              resource:
+                apiGroup: networking.higress.io
+                kind: McpBridge
+                name: default

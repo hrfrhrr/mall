@@ -1,0 +1,21 @@
+apiVersion: networking.higress.io/v1
+kind: McpBridge
+metadata:
+  name: default
+  namespace: higress-system
+  creationTimestamp: "2000-01-01T00:00:00Z"
+  resourceVersion: "1"
+spec:
+  registries:
+  # Higress 控制台自身（静态来源，保持默认）
+  - domain: 127.0.0.1:8001
+    name: higress-console
+    port: 80
+    type: static
+  # Nacos 2.x 服务来源（gRPC 协议，type 必须为 nacos2）
+  - name: nacos
+    type: nacos2
+    domain: nacos
+    port: 8848
+    nacosGroups:
+    - DEFAULT_GROUP
